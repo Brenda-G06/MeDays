@@ -1,17 +1,26 @@
 {
-  "name": "v1",
+  "name": "medays",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Brenda",
   "license": "ISC",
-  "description": "",
+  "description": "teste primeira ver",
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mysql2": "^3.10.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brenda-G06/MeDays.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Brenda-G06/MeDays/issues"
+  },
+  "homepage": "https://github.com/Brenda-G06/MeDays#readme"
 }

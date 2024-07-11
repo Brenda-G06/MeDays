@@ -1,13 +1,12 @@
+// src/index.js
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const userRoutes = require('./routes/rotasUsuarios');
 
 app.use(express.json());
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+app.use('/api', userRoutes);
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Servidor rodando na porta ${port}`);
 });

@@ -6,6 +6,6 @@ const usurarioController = require('../controllers/controllersUsuarios');
 
 
 router.post('/user', controllersUsuarios.createUser);
-router.get('/user/:id/schedule', controllerUsuarios.getAgendaUsuario);
+router.get('/user/:id/schedule', controllersUsuarios.getAgendaUsuario);
 
 module.exports = router;
