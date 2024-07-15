@@ -1,12 +1,14 @@
-// src/index.js
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
-const userRoutes = require('./routes/rotasUsuarios');
+const bodyParser = require('body-parser');
+const rotasUsuarios = require('./routes/rotasUsuarios'); // Importa as rotas de usuários
 
-app.use(express.json());
-app.use('/api', userRoutes);
+app.use(bodyParser.json());
 
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
+// Define as rotas para usuários
+app.use('/api/usuarios', rotasUsuarios);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });

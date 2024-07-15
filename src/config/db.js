@@ -1,6 +1,5 @@
-
-const mysql = require('mysql2');  //conectar db MYSQL
-const dotenv = require('dotenv'); //carregar variaveis de ambiente 
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -11,8 +10,8 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(error => {
-    if (error) throw error;  //si n tiver erros na conecao
-    console.log('Successfully connected to the database.');
+    if (error) throw error;
+    console.log('Conexão com o banco de dados bem-sucedida.');
 });
 
-module.exports = connection; //exportar para ser usada durante o resto do codigo 
+module.exports = connection;
