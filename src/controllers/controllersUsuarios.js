@@ -12,3 +12,18 @@ exports.createUser = (req, res) => {
         }
     });
 };
+
+
+
+exports.listUsers = (req, res) => {
+    const query = 'SELECT * FROM usuarios';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao listar usuários:', err);
+            res.status(500).json({ error: 'Erro ao listar usuários' });
+        } else {
+            res.status(200).json(results);
+        }
+    });
+};
+
