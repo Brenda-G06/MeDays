@@ -11,3 +11,59 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.sub{
+  font-weight: bold;
+  font-size: 3rem; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.301); 
+  font-family: 'Mulish', sans-serif;
+  font-weight: 1000;
+}
+
+.h1Tittle{
+  
+  font-size:0.5rem; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.075); 
+  font-family: 'Mulish', sans-serif;
+  font-weight: 100;
+}
+
+.navTittle{
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.11); 
+  font-family: "Judson", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  cursor: default;
+}
+
+.imgDoc{
+  width: 100%; 
+  height: auto; 
+  max-width: 500px; 
+  margin-left: 90px;
+}
+
+.nav-link-login {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #448b61; 
+  color: #fff; 
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  cursor: pointer; 
+}
+
+.nav-link-login:hover {
+  background-color: #177b4c; 
+  text-decoration: none; 
+  color:#fff;
+}
+
