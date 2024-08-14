@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import HomePage from './componentes/Home'; // Certifique-se de que o nome e o caminho estão corretos
-import Calendario from './componentes/calendario'; // Certifique-se de que o nome e o caminho estão corretos
+import HomePage from './componentes/Home';
+import CalendarioPage from './componentes/Calendario';
+import RegistroPage from './componentes/Registro';
 import logo from './logo/logo.png';
-
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container">
-          <a className="navbar-brand" href="/">
+            <a className="navbar-brand" href="/">
               <img src={logo} alt="MeDays Logo" style={{ height: '60px' }} /> 
             </a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,9 +32,8 @@ function App() {
                   <Link className="nav-link navTittle" to="/calendario">Consultas</Link>
                 </li>
                 <li className="nav-item ms-3">
-                  <Link className="nav-link navTittle nav-link-login" to="/login">Login</Link> 
+                  <Link className="nav-link navTittle nav-link-login" to="/registro">Registro</Link> 
                 </li>
-  
               </ul>
             </div>
           </div>
@@ -42,8 +41,8 @@ function App() {
         <main className="mt-4">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/calendario" element={<Calendario />} />
-            {/* Adicione outras rotas conforme necessário */}
+            <Route path="/calendario" element={<CalendarioPage />} />
+            <Route path="/registro" element={<RegistroPage />} />
           </Routes>
         </main>
       </div>
