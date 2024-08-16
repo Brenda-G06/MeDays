@@ -6,9 +6,9 @@ const connectToDatabase = async () => {
     try {
         const connection = await mysql.createConnection({
             host: 'localhost',
-            user: 'BrendaGomes',  // Substitua pelo seu usuário do MySQL
-            password: 'teste@123',  // Substitua pela sua senha do MySQL
-            database: 'mddb'  // Substitua pelo nome do seu banco de dados
+            user: 'BrendaGomes', 
+            password: 'teste@123',  
+            database: 'mddb'  
         });
         return connection;
     } catch (error) {

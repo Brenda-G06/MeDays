@@ -7,7 +7,7 @@ const cors = require('cors')
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000' // Permitir requisições do frontend
+    origin: 'http://localhost:3000' 
 }));
 app.use('/api', consultaRoutes);
 app.use('/api/usuarios', rotasUsuarios);

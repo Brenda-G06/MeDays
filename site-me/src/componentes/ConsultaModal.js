@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 
-import './StyleInterno.css'; // Importa seus estilos personalizados
-import { ptBR } from 'date-fns/locale'; // Importa a configuração do local
-import ConsultaModal from './ConsultaModal'; // Importa o modal
+import './StyleInterno.css'; 
+import { ptBR } from 'date-fns/locale'; 
+import ConsultaModal from './ConsultaModal'; 
 
 const CalendarioPage = () => {
-    const [date, setDate] = useState(new Date()); // Define o estado da data selecionada
-    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar a abertura do modal
+    const [date, setDate] = useState(new Date()); 
+    const [isModalOpen, setIsModalOpen] = useState(false); 
 
-    // Função para atualizar a data selecionada
+   
     const handleDateChange = (newDate) => {
         setDate(newDate);
     };
 
-    // Função para abrir o modal
+    
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
 
-    // Função para fechar o modal
+   
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
@@ -28,9 +28,9 @@ const CalendarioPage = () => {
         <div className="calendario-container">
             <div className="calendario-port">
                 <Calendar
-                    onChange={handleDateChange} // Atualiza a data selecionada
-                    value={date} // Data selecionada atualmente
-                    locale={ptBR} // Configuração do local em português
+                    onChange={handleDateChange} 
+                    value={date} 
+                    locale={ptBR} 
                 />
             </div>
             <button className="add-appointment-button" onClick={handleOpenModal}>

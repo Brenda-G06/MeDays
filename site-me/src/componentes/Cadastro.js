@@ -13,7 +13,7 @@ const questions = [
         question: 'Qual é a intensidade da dor?',
         options: ['Leve', 'Moderada', 'Severa']
     }
-    // Adicione mais perguntas conforme necessário
+   
 ];
 
 const Questionario = () => {
@@ -32,7 +32,7 @@ const Questionario = () => {
             if (currentQuestionIndex < questions.length - 1) {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
-                // Submete as respostas para a API
+                
                 submitResponses();
             }
         }
@@ -41,11 +41,11 @@ const Questionario = () => {
     const submitResponses = async () => {
         try {
             await axios.post('/api/condicao', {
-                usuario_id: 1, // Substitua pelo ID real do usuário
-                descricao: 'Descrição da condição', // Substitua com dados reais
-                tipo: 'articular', // Substitua com dados reais
-                localizacao: responses[1], // Exemplo: Resposta para localização
-                intensidade: responses[2] // Exemplo: Resposta para intensidade
+                usuario_id: 1, 
+                descricao: 'Descrição da condição', 
+                tipo: 'articular', 
+                localizacao: responses[1], 
+                intensidade: responses[2] 
             });
             alert('Respostas enviadas com sucesso!');
         } catch (error) {
