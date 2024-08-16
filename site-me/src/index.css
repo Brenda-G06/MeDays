@@ -26,6 +26,7 @@ code {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.075); 
   font-family: 'Mulish', sans-serif;
   font-weight: 100;
+  margin-top: 10%;
 }
 
 .navTittle{
@@ -44,6 +45,7 @@ p, h1, h2, h3, h4, h5, h6 {
   height: auto; 
   max-width: 500px; 
   margin-left: 90px;
+  margin-top: 16%;
 }
 
 .nav-link-login {
@@ -67,3 +69,37 @@ p, h1, h2, h3, h4, h5, h6 {
   color:#fff;
 }
 
+.login-box {
+  background-color: #ffffff; 
+  padding: 20px; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  max-width: 500px; 
+  margin: auto; 
+}
+
+.login-box label {
+  display: block; 
+  margin-bottom: 10px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+}
+
+.login-box button {
+  background-color: #28a745; 
+  color: #ffffff; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+}
+
+.login-box button:hover {
+  background-color: #218838; 
+}

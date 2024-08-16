@@ -1,11 +1,16 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
-const profissioanais = () => {
+const ProfissionaisPage = () => {
   return (
     <div>
-      <h1>as</h1>
+      <h1>profissionais
+
+        dicas de como achar artigos bons 
+
+        fakenews
+      </h1>
     </div>
   );
 };
 
-export default profissioanais;
+export default ProfissionaisPage;
