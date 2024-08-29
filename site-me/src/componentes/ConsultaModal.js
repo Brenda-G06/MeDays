@@ -1,44 +1,16 @@
-import React, { useState } from 'react';
-import Calendar from 'react-calendar';
+import React from 'react';
 
-import './StyleInterno.css'; 
-import { ptBR } from 'date-fns/locale'; 
-import ConsultaModal from './ConsultaModal'; 
-
-const CalendarioPage = () => {
-    const [date, setDate] = useState(new Date()); 
-    const [isModalOpen, setIsModalOpen] = useState(false); 
-
-   
-    const handleDateChange = (newDate) => {
-        setDate(newDate);
-    };
-
-    
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
-
-   
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
+const ConsultaModal = ({ isOpen, onClose }) => {
+    if (!isOpen) return null;
 
     return (
-        <div className="calendario-container">
-            <div className="calendario-port">
-                <Calendar
-                    onChange={handleDateChange} 
-                    value={date} 
-                    locale={ptBR} 
-                />
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <h2>Adicionar Consulta</h2>
+                <button onClick={onClose}>Fechar</button>
             </div>
-            <button className="add-appointment-button" onClick={handleOpenModal}>
-                Adicionar Consulta
-            </button>
-            <ConsultaModal isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
     );
 };
 
-export default CalendarioPage;
+export default ConsultaModal;
