@@ -21,14 +21,13 @@ function UserProfile({ userName }) {
             })
             .catch(error => {
                 if (error.response) {
-                    // O servidor respondeu com um código de status diferente de 2xx
                     setError(`Erro: ${error.response.status} - ${error.response.data.error}`);
                 } else if (error.request) {
-                    // A requisição foi feita, mas não houve resposta
+             
                     setError('Erro: Nenhuma resposta do servidor.');
                     console.error('Erro: Nenhuma resposta do servidor:', error.request);
                 } else {
-                    // Algo deu errado na configuração da requisição
+        
                     setError(`Erro: ${error.message}`);
                     console.error('Erro:', error.message);
                 }

@@ -1,25 +1,57 @@
-import React from 'react';
 import React, { useState } from 'react';
-const questions = [
+
+const Perguntas = [
     {
-        question: 'Qual é a sua principal condição física?',
-        options: ['Dor Articular', 'Dor Muscular']
+        question: 'Você pratica algum tipo de atividade física?',
+        options: ['Sim, pratico', 'Não, não pratico'] 
     },
     {
-        question: 'Qual é a localização da dor?',
+        question: 'Você segue algum plano alimentar específico para seus objetivos?',
+        options: ['Sim, sigo', 'Não, não sigo'] 
+    },
+    {
+        question: 'Você sente algum desconforto muscular?',
+        options: ['Sim', 'Não'] 
+    },
+    {
+        question: 'Você sente algum desconforto articular?',
+        options: ['Sim', 'Não'] 
+    },
+    {
+        question: 'Você pretende praticar algum novo esporte?',
+        options: ['Sim', 'Não'] 
+    }
+];
+
+const perguntasCondicionais = {
+    'Sim, sigo (plano alimentar)': {
+        question: 'Esse plano foi montado por um profissional em nutrição?',
+        options: ['Sim', 'Não']
+    },
+    'Sim (muscular)': {
+        question: 'Em que região muscular você sente desconforto?',
         options: ['Braço', 'Perna', 'Costas', 'Outros']
     },
-    {
-        question: 'Qual é a intensidade da dor?',
-        options: ['Leve', 'Moderada', 'Severa']
+    'Sim (articular)': {
+        question: 'Em que região articular você sente desconforto?',
+        options: ['Ombro', 'Joelho', 'Quadril', 'Outros']
+    },
+    'Sim, pratico': {
+        question: 'Que tipo de atividade física você pratica?',
+        options: ['Resistência', 'Força', 'Velocidade', 'Agilidade', 'Aquáticos']
+    },
+    'Sim, pretendo (novo esporte)': {
+        question: 'Que tipo de esporte você gostaria de praticar?',
+        options: ['Futebol', 'Natação', 'Corrida', 'Ciclismo', 'Outros']
     }
-   
-];
+};
 
 const Questionario = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
     const [responses, setResponses] = useState([]);
+    const [showConditionalQuestion, setShowConditionalQuestion] = useState(false);
+    const [conditionalQuestion, setConditionalQuestion] = useState(null);
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
@@ -27,55 +59,78 @@ const Questionario = () => {
 
     const handleNextClick = () => {
         if (selectedOption !== null) {
-            setResponses([...responses, selectedOption]);
-            setSelectedOption(null);
-            if (currentQuestionIndex < questions.length - 1) {
-                setCurrentQuestionIndex(currentQuestionIndex + 1);
+            const newResponses = [...responses, selectedOption];
+            setResponses(newResponses);
+            if (currentQuestionIndex === 1 && selectedOption === 'Sim, sigo') {
+                setConditionalQuestion(perguntasCondicionais['Sim, sigo (plano alimentar)']);
+                setShowConditionalQuestion(true);
+            } else if (currentQuestionIndex === 2 && selectedOption === 'Sim') {
+                setConditionalQuestion(perguntasCondicionais['Sim (muscular)']);
+                setShowConditionalQuestion(true);
+            } else if (currentQuestionIndex === 3 && selectedOption === 'Sim') {
+                setConditionalQuestion(perguntasCondicionais['Sim (articular)']);
+                setShowConditionalQuestion(true);
+            } else if (currentQuestionIndex === 0 && selectedOption === 'Sim, pratico') {
+                setConditionalQuestion(perguntasCondicionais['Sim, pratico']);
+                setShowConditionalQuestion(true);
+            } else if (currentQuestionIndex === 4 && selectedOption === 'Sim') {
+                setConditionalQuestion(perguntasCondicionais['Sim, pretendo (novo esporte)']);
+                setShowConditionalQuestion(true);
             } else {
-                
-                submitResponses();
+                setSelectedOption(null); 
+                setShowConditionalQuestion(false); 
+                if (currentQuestionIndex < Perguntas.length - 1) {
+                    setCurrentQuestionIndex(currentQuestionIndex + 1); 
+                } else {
+                    submitResponses(newResponses); 
+                }
             }
         }
     };
 
-    const submitResponses = async () => {
-        try {
-            await axios.post('/api/condicao', {
-                usuario_id: 1, 
-                descricao: 'Descrição da condição', 
-                tipo: 'articular', 
-                localizacao: responses[1], 
-                intensidade: responses[2] 
-            });
-            alert('Respostas enviadas com sucesso!');
-        } catch (error) {
-            console.error('Erro ao enviar respostas:', error);
-            alert('Erro ao enviar respostas.');
-        }
-    };
+   
 
     return (
         <div>
-            <h2>{questions[currentQuestionIndex].question}</h2>
-            {questions[currentQuestionIndex].options.map((option, index) => (
-                <div key={index}>
-                    <input
-                        type="radio"
-                        id={option}
-                        name="question"
-                        value={option}
-                        checked={selectedOption === option}
-                        onChange={handleOptionChange}
-                    />
-                    <label htmlFor={option}>{option}</label>
-                </div>
-            ))}
-            <button onClick={handleNextClick} disabled={selectedOption === null}>
-                {currentQuestionIndex < questions.length - 1 ? 'Próximo' : 'Enviar'}
-            </button>
+            {showConditionalQuestion ? (
+                <>
+                    <h2>{conditionalQuestion.question}</h2>
+                    <div>
+                        {conditionalQuestion.options.map((option, index) => (
+                            <label key={index}>
+                                <input
+                                    type="radio"
+                                    value={option}
+                                    checked={selectedOption === option}
+                                    onChange={handleOptionChange}
+                                />
+                                {option}
+                            </label>
+                        ))}
+                    </div>
+                    <button onClick={handleNextClick}>Próxima</button>
+                </>
+            ) : (
+                <>
+                    <h2>{Perguntas[currentQuestionIndex].question}</h2>
+                    <div>
+                        {Perguntas[currentQuestionIndex].options.map((option, index) => (
+                            <label key={index}>
+                                <input
+                                    type="radio"
+                                    value={option}
+                                    checked={selectedOption === option}
+                                    onChange={handleOptionChange}
+                                />
+                                {option}
+                            </label>
+                        ))}
+                    </div>
+                    <button onClick={handleNextClick}>Próxima</button>
+                </>
+            )}
         </div>
     );
 };
 
 export default Questionario;
-

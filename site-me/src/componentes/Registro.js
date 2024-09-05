@@ -12,7 +12,7 @@ function UserForm({ setUserName }) {
     const [telefone, setTelefone] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-    const [showLogin, setShowLogin] = useState(false); // Estado para alternar entre login e cadastro
+    const [showLogin, setShowLogin] = useState(false); 
     const [loginEmailOrPhone, setLoginEmailOrPhone] = useState('');
     const [loginSenha, setLoginSenha] = useState('');
 
@@ -31,14 +31,14 @@ function UserForm({ setUserName }) {
         })
         .then(response => {
             setMessage('Usuário criado com sucesso!');
-            setUserName(nome); // Atualiza o nome do usuário na navegação
+            setUserName(nome); 
             setNome('');
             setEmail('');
             setDataNascimento('');
             setLocalizacao('');
             setSenha('');
             setTelefone('');
-            navigate('/'); // Redireciona para a home
+            navigate('/'); 
         })
         .catch(error => {
             setError('Erro ao criar usuário.');
@@ -55,8 +55,8 @@ function UserForm({ setUserName }) {
         })
         .then(response => {
             const { nome } = response.data;
-            setUserName(nome); // Atualiza o nome do usuário na navegação
-            navigate('/'); // Redireciona para a home
+            setUserName(nome); o
+            navigate('/'); 
         })
         .catch(error => {
             setError('Erro ao fazer login.');
