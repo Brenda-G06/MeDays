@@ -25,7 +25,7 @@ const HomePage = () => {
             </div>
             <div className="row">
               <div className="col">
-                <Link to="/cadastro">
+                <Link to="/questionario">
                   <button className="btn btn-success">Clique aqui!</button>
                 </Link>
               </div>

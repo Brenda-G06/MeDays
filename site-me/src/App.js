@@ -8,6 +8,7 @@ import ConsultasPage from './componentes/Consultas';
 import CadastroPage from './componentes/Registro';
 import PerfilPage from './componentes/Perfil'; 
 import logo from './logo/logo.png';
+import QuestionarioPage from './componentes/Cadastro'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -42,7 +43,7 @@ function App() {
                                 </li>
                                 {userName ? (
                                     <li className="nav-item ms-3">
-                                        <Link className="nav-link navTittle" to="/perfil">{userName}</Link> {/* Nome do usuário */}
+                                        <Link className="nav-link navTittle" to="/perfil">{userName}</Link> 
                                     </li>
                                 ) : (
                                     <li className="nav-item ms-3">
@@ -57,11 +58,12 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/calendario" element={<CalendarioPage />} />
-                        <Route path="/registro" element={<RegistroPage setUserName={setUserName} />} /> {/* Passar setUserName */}
+                        <Route path="/registro" element={<RegistroPage setUserName={setUserName} />} /> 
                         <Route path="/profissionais" element={<ProfissionaisPage />} />
                         <Route path="/consultas" element={<ConsultasPage />} />
-                        <Route path="/cadastro" element={<CadastroPage setUserName={setUserName} />} /> {/* Passar setUserName */}
-                        <Route path="/perfil" element={<PerfilPage userName={userName} />} /> {/* Passar userName */}
+                        <Route path="/cadastro" element={<CadastroPage setUserName={setUserName} />} /> 
+                        <Route path="/perfil" element={<PerfilPage userName={userName} />} />
+                        <Route path="/questionario" element={<QuestionarioPage />} />
                     </Routes>
                    
                 </main>
