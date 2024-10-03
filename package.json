@@ -18,13 +18,16 @@
     "axios": "^1.7.3",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mysql2": "^3.10.2",
     "react-calendar": "^5.0.0",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "react-router-dom": "^6.26.2",
+    "web-vitals": "^4.2.3"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

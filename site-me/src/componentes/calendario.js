@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import './StyleInterno.css'; 
+import '/StyleInterno.css'; 
 import { ptBR } from 'date-fns/locale'; 
 import ConsultaModal from './ConsultaModal';
 
