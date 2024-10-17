@@ -20,6 +20,7 @@
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
+    "currently": "^0.0.8",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
