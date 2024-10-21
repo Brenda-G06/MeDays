@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './index';
+
 
 const Perguntas = [
     {
@@ -92,6 +92,11 @@ const Questionario = () => {
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
+    };
+
+    const submitResponses = (responses) => {
+        console.log('Responses submitted:', responses);
+        // Add the logic to send responses to your server or process them.
     };
 
     const handleNextClick = () => {

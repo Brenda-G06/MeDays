@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import '/StyleInterno.css'; 
+import './StyleInterno.css';
 import { ptBR } from 'date-fns/locale'; 
 import ConsultaModal from './ConsultaModal';
 
@@ -22,7 +22,7 @@ const CalendarioPage = () => {
                             className="w-100"
                         />
                     </div>
-                    <button className="btn btn-primary mt-3" onClick={() => setIsModalOpen(true)}>
+                    <button className="btn btn-primary mt-3 botau" onClick={() => setIsModalOpen(true)}>
                         Adicionar Consulta
                     </button>
                 </div>

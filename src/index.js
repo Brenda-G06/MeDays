@@ -1,23 +1,35 @@
 const express = require('express');
-const app = express();
+const cors = require('cors');
 const consultaRoutes = require('./routes/consultaRoutes');
-const rotasUsuarios = require('./routes/rotasUsuarios'); 
-const connectToDatabase = require('./config/db'); 
-const cors = require('cors')
+const rotasUsuarios = require('./routes/rotasUsuarios');
+const connectToDatabase = require('./config/db');
 
+const app = express();
+
+// Middleware
 app.use(express.json());
-app.use(cors({
-    origin: 'http://localhost:3000' 
-}));
+app.use(cors({ origin: 'http://localhost:3000' }));
+
+// Rotas
 app.use('/api', consultaRoutes);
 app.use('/api/usuarios', rotasUsuarios);
-connectToDatabase().then(() => {
-    console.log('Banco de dados conectado com sucesso.');
 
-    const PORT = process.env.PORT || 3001;
-    app.listen(PORT, () => {
-        console.log(`Servidor rodando na porta ${PORT}`);
+// Conexão com o banco de dados
+connectToDatabase()
+    .then(() => {
+        console.log('Banco de dados conectado com sucesso.');
+
+        const PORT = process.env.PORT || 3001;
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error('Erro ao conectar ao banco de dados:', error);
     });
-}).catch((error) => {
-    console.error('Erro ao conectar ao banco de dados:', error);
+
+// Middleware de tratamento de erros
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Algo deu errado!');
 });

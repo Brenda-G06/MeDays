@@ -5,10 +5,10 @@ dotenv.config();
 const connectToDatabase = async () => {
     try {
         const connection = await mysql.createConnection({
-            host: 'localhost',
-            user: 'BrendaGomes', 
-            password: 'teste@123',  
-            database: 'mddb'  
+            host: 'mysql.infocimol.com.br',  
+            user: 'infocimol19',  
+            password: 'Brenda0605119',  
+            database: 'infocimol19'  
         });
         return connection;
     } catch (error) {
