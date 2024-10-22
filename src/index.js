@@ -6,15 +6,17 @@ const connectToDatabase = require('./config/db');
 
 const app = express();
 
-// Middleware
+
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000' }));
 
-// Rotas
-app.use('/api', consultaRoutes);
-app.use('/api/usuarios', rotasUsuarios);
 
-// Conexão com o banco de dados
+app.use('/api', consultaRoutes);
+app.use('/usuarios', rotasUsuarios);
+app.use('/api/questionario', questionarioRoutes);
+
+
+
 connectToDatabase()
     .then(() => {
         console.log('Banco de dados conectado com sucesso.');
@@ -28,7 +30,6 @@ connectToDatabase()
         console.error('Erro ao conectar ao banco de dados:', error);
     });
 
-// Middleware de tratamento de erros
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Algo deu errado!');

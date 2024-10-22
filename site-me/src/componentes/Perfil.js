@@ -1,94 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function UserProfile({ userName }) {
-    const [userData, setUserData] = useState({
+function PerfilPage() {
+    const [user, setUser] = useState({
         nome: '',
         email: '',
-        dataNascimento: '',
+        data_nascimento: '',
         localizacao: '',
-        telefone: '',
-        foto: '',
+        telefone: ''
     });
 
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
-
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/usuarios/${userName}`)
-            .then(response => {
-                setUserData(response.data);
-            })
-            .catch(error => {
-                if (error.response) {
-                    setError(`Erro: ${error.response.status} - ${error.response.data.error}`);
-                } else if (error.request) {
-             
-                    setError('Erro: Nenhuma resposta do servidor.');
-                    console.error('Erro: Nenhuma resposta do servidor:', error.request);
-                } else {
         
-                    setError(`Erro: ${error.message}`);
-                    console.error('Erro:', error.message);
-                }
-            });
-    }, [userName]);
-    
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUserData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+        const storedUsuarioId = localStorage.getItem('usuarioId'); 
+        if (storedUsuarioId) {
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        axios.put(`http://localhost:3001/api/usuarios/${userName}`, userData)
+            axios.get(`http://localhost:3001/usuarios/${storedUsuarioId}`) 
             .then(response => {
-                setMessage('Dados atualizados com sucesso!');
+                setUser(response.data);
             })
             .catch(error => {
-                setError('Erro ao atualizar os dados.');
-                console.error('Erro ao atualizar os dados:', error);
+
+                console.error('Erro ao buscar o perfil do usuário:', error.response);
+                console.error('Detalhes do erro:', error.message);
             });
-    };
+        } else {
+            console.error('Usuário não está logado ou ID não encontrado no localStorage.');
+        }
+    }, []);
 
     return (
         <div className="container mt-4">
             <h2>Perfil do Usuário</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Nome:
-                    <input type="text" name="nome" value={userData.nome} onChange={handleChange} required />
-                </label>
-                <label>
-                    Email:
-                    <input type="email" name="email" value={userData.email} onChange={handleChange} required disabled />
-                </label>
-                <label>
-                    Data de Nascimento:
-                    <input type="date" name="dataNascimento" value={userData.dataNascimento} onChange={handleChange} required />
-                </label>
-                <label>
-                    Localização:
-                    <input type="text" name="localizacao" value={userData.localizacao} onChange={handleChange} />
-                </label>
-                <label>
-                    Telefone:
-                    <input type="text" name="telefone" value={userData.telefone} onChange={handleChange} />
-                </label>
-                <label>
-                    Foto:
-                    <input type="file" name="foto" onChange={(e) => setUserData({ ...userData, foto: e.target.files[0] })} />
-                </label>
-                <button type="submit">Atualizar Perfil</button>
-            </form>
-            {message && <p>{message}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {user.nome ? (
+                <div>
+                    <p><strong>Nome:</strong> {user.nome}</p>
+                    <p><strong>Email:</strong> {user.email}</p>
+                    <p><strong>Data de Nascimento:</strong> {user.data_nascimento}</p>
+                    <p><strong>Localização:</strong> {user.localizacao}</p>
+                    <p><strong>Telefone:</strong> {user.telefone}</p>
+                </div>
+            ) : (
+                <p>Carregando informações do perfil...</p>
+            )}
         </div>
     );
 }
 
-export default UserProfile;
+export default PerfilPage;

@@ -28,6 +28,7 @@ exports.createUser = async (req, res) => {
     } catch (error) {
         console.error('Erro ao processar a criação do usuário:', error);
         res.status(500).json({ error: 'Erro ao criar o usuário' });
+        
     }
 };
 
@@ -49,5 +50,37 @@ exports.getUserByUserName = async (req, res) => {
     } catch (error) {
         console.error('Erro ao buscar o usuário:', error);
         res.status(500).json({ error: 'Erro ao buscar o usuário.' });
+    }
+};
+
+exports.loginUser = async (req, res) => {
+    const { emailOrPhone, senha } = req.body;
+
+    if (!emailOrPhone || !senha) {
+        return res.status(400).json({ error: 'Email/Telefone e senha são obrigatórios.' });
+    }
+
+    try {
+        const connection = await connectToDatabase();
+
+        const query = 'SELECT id, nome, email, senha, telefone FROM usuario WHERE email = ? OR telefone = ?';
+        const [rows] = await connection.execute(query, [emailOrPhone, emailOrPhone]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Usuário não encontrado.' });
+        }
+
+        const user = rows[0];
+        const senhaValida = await bcrypt.compare(senha, user.senha);
+
+        if (!senhaValida) {
+            return res.status(401).json({ error: 'Senha incorreta.' });
+        }
+
+       
+        res.status(200).json({ nome: user.nome, email: user.email });
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        res.status(500).json({ error: 'Erro ao fazer login.' });
     }
 };

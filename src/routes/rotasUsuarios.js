@@ -3,8 +3,7 @@ const router = express.Router();
 const { createUser, getUserByUserName } = require('../controllers/controllersUsuarios');
 
 
-router.post('/usuarios/user', createUser);
-
+router.post('/user', createUser);
 
 router.get('/usuarios/:userName', getUserByUserName);
 

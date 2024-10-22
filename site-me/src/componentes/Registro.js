@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import DocsCadastro from './img/Doctors-bro.png';
+import DocsCadastro from './img/Doctors-bro.png'; // Sua imagem de login
 
 function UserForm({ setUserName }) {
     const [nome, setNome] = useState('');
@@ -12,33 +12,32 @@ function UserForm({ setUserName }) {
     const [telefone, setTelefone] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-    const [showLogin, setShowLogin] = useState(false); 
+    const [showLogin, setShowLogin] = useState(false);
     const [loginEmailOrPhone, setLoginEmailOrPhone] = useState('');
     const [loginSenha, setLoginSenha] = useState('');
 
     const navigate = useNavigate();
 
+    // Verifica se o usuário já está logado no localStorage ao carregar a página
+    useEffect(() => {
+        const storedUserName = localStorage.getItem('userName');
+        if (storedUserName) {
+            setUserName(storedUserName);
+            navigate('/'); // Redireciona para a home se o usuário já estiver logado
+        }
+    }, [setUserName, navigate]);
+
     const handleSubmitCadastro = (e) => {
         e.preventDefault();
-
-        axios.post('http://localhost:3001/api/usuarios/user', { 
-            nome,
-            email,
-            data_nascimento: dataNascimento,
-            localizacao,
-            senha,
-            telefone 
+        axios.post('http://localhost:3001/usuarios/user', {
+            nome, email, data_nascimento: dataNascimento, localizacao, senha, telefone,
         })
         .then(response => {
             setMessage('Usuário criado com sucesso!');
-            setUserName(nome); 
-            setNome('');
-            setEmail('');
-            setDataNascimento('');
-            setLocalizacao('');
-            setSenha('');
-            setTelefone('');
-            navigate('/'); 
+            setUserName(nome);
+            localStorage.setItem('userName', nome); // Salva no localStorage para persistir o login
+            setNome(''); setEmail(''); setDataNascimento(''); setLocalizacao(''); setSenha(''); setTelefone('');
+            navigate('/'); // Redireciona para a home após o cadastro
         })
         .catch(error => {
             setError('Erro ao criar usuário.');
@@ -48,18 +47,23 @@ function UserForm({ setUserName }) {
 
     const handleLogin = (e) => {
         e.preventDefault();
-
         axios.post('http://localhost:3001/api/usuarios/login', {
-            emailOrPhone: loginEmailOrPhone,
-            senha: loginSenha,
+            emailOrPhone: loginEmailOrPhone, senha: loginSenha,
         })
         .then(response => {
             const { nome } = response.data;
-            setUserName(nome); o
-            navigate('/'); 
+            setUserName(nome);
+            localStorage.setItem('userName', nome); // Salva no localStorage para persistir o login
+            navigate('/'); // Redireciona para a home após o login
         })
         .catch(error => {
-            setError('Erro ao fazer login.');
+            if (error.response && error.response.status === 401) {
+                setError('Credenciais inválidas. Tente novamente.');
+            } else if (error.response && error.response.status === 404) {
+                setError('Usuário não encontrado.');
+            } else {
+                setError('Erro ao fazer login. Tente novamente mais tarde.');
+            }
             console.error('Erro ao fazer login:', error);
         });
     };
@@ -101,9 +105,8 @@ function UserForm({ setUserName }) {
                                 </form>
                                 {message && <p>{message}</p>}
                                 {error && <p style={{ color: 'red' }}>{error}</p>}
-
                                 <div className="mt-3">
-                                    <p>Já tem conta? <button className="btn btn-link p-0" onClick={() => setShowLogin(true)}>Faça login</button></p>
+                                    <p>Já tem conta? <button onClick={() => setShowLogin(true)}>Faça login</button></p>
                                 </div>
                             </>
                         ) : (
@@ -121,18 +124,15 @@ function UserForm({ setUserName }) {
                                     <button type="submit">Fazer Login</button>
                                 </form>
                                 {error && <p style={{ color: 'red' }}>{error}</p>}
-
                                 <div className="mt-3">
-                                    <p>Não tem conta? <button className="btn btn-link p-0" onClick={() => setShowLogin(false)}>Cadastre-se</button></p>
+                                    <p>Não tem conta? <button onClick={() => setShowLogin(false)}>Cadastre-se</button></p>
                                 </div>
                             </>
                         )}
                     </div>
                 </div>
                 <div className="col-md-6">
-                    <div className="image-container">
-                        <img src={DocsCadastro} alt="Imagem" className="img-fluid" />
-                    </div>
+                    <img src={DocsCadastro} alt="Cadastro" className="img-fluid" />
                 </div>
             </div>
         </div>
