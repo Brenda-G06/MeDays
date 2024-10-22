@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import DocsCadastro from './img/Doctors-bro.png'; // Sua imagem de login
+import DocsCadastro from './img/Doctors-bro.png'; 
 
 function UserForm({ setUserName }) {
     const [nome, setNome] = useState('');
@@ -18,12 +18,12 @@ function UserForm({ setUserName }) {
 
     const navigate = useNavigate();
 
-    // Verifica se o usuário já está logado no localStorage ao carregar a página
     useEffect(() => {
         const storedUserName = localStorage.getItem('userName');
+        const storedUsuarioId = localStorage.getItem('usuarioId'); 
         if (storedUserName) {
             setUserName(storedUserName);
-            navigate('/'); // Redireciona para a home se o usuário já estiver logado
+            navigate('/'); 
         }
     }, [setUserName, navigate]);
 
@@ -35,9 +35,22 @@ function UserForm({ setUserName }) {
         .then(response => {
             setMessage('Usuário criado com sucesso!');
             setUserName(nome);
-            localStorage.setItem('userName', nome); // Salva no localStorage para persistir o login
-            setNome(''); setEmail(''); setDataNascimento(''); setLocalizacao(''); setSenha(''); setTelefone('');
-            navigate('/'); // Redireciona para a home após o cadastro
+            localStorage.setItem('userName', nome); 
+
+            
+            if (response.data.usuarioId) {
+                localStorage.setItem('usuarioId', response.data.usuarioId); 
+            }
+
+          
+            setNome(''); 
+            setEmail(''); 
+            setDataNascimento(''); 
+            setLocalizacao(''); 
+            setSenha(''); 
+            setTelefone('');
+
+            navigate('/'); 
         })
         .catch(error => {
             setError('Erro ao criar usuário.');
@@ -53,8 +66,9 @@ function UserForm({ setUserName }) {
         .then(response => {
             const { nome } = response.data;
             setUserName(nome);
-            localStorage.setItem('userName', nome); // Salva no localStorage para persistir o login
-            navigate('/'); // Redireciona para a home após o login
+            localStorage.setItem('userName', nome); 
+            localStorage.setItem('usuarioId', response.data.usuarioId); 
+            navigate('/'); 
         })
         .catch(error => {
             if (error.response && error.response.status === 401) {

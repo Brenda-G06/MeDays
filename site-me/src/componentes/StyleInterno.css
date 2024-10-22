@@ -16,11 +16,11 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Fundo escuro para o overlay */
+  background: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Certifique-se que o modal está acima de outros elementos */
+  z-index: 1000; 
 }
 
 
@@ -30,7 +30,7 @@
   border-radius: 5px;
   width: 90%;
   max-width: 500px;
-  z-index: 1001; /* Conteúdo do modal acima do overlay */
+  z-index: 1001;
 }
 
 .close-button {

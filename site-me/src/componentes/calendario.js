@@ -7,11 +7,11 @@ import ConsultaModal from './ConsultaModal';
 const CalendarioPage = () => {
     const [date, setDate] = useState(new Date());
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [usuarioId, setUsuarioId] = useState(null); // Estado para o ID do usuário
+    const [usuarioId, setUsuarioId] = useState(null); 
 
-    // Simulando a recuperação do ID do usuário (pode vir de localStorage, por exemplo)
+   
     useEffect(() => {
-        const storedUsuarioId = localStorage.getItem('usuarioId'); // Supondo que o ID está armazenado no localStorage após o login
+        const storedUsuarioId = localStorage.getItem('usuarioId'); 
         if (storedUsuarioId) {
             setUsuarioId(storedUsuarioId);
         }
@@ -26,14 +26,14 @@ const CalendarioPage = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData) // Enviando o formData com o usuario_id incluso
+                body: JSON.stringify(formData)
             });
 
             const data = await response.json();
 
             if (response.ok) {
                 alert('Consulta adicionada com sucesso!');
-                setIsModalOpen(false); // Fecha o modal ao salvar
+                setIsModalOpen(false); 
             } else {
                 alert(data.message || 'Erro ao adicionar consulta.');
             }
@@ -60,13 +60,13 @@ const CalendarioPage = () => {
                     </button>
                 </div>
             </div>
-            {usuarioId && ( // Somente exibe o modal se o ID do usuário estiver disponível
+            {usuarioId && ( 
                 <ConsultaModal 
                     isOpen={isModalOpen} 
                     onClose={() => setIsModalOpen(false)} 
                     onSave={handleSaveConsulta}
-                    selectedDate={date.toISOString().split('T')[0]} // Passando a data selecionada
-                    usuarioId={usuarioId} // Passando o ID do usuário automaticamente
+                    selectedDate={date.toISOString().split('T')[0]} 
+                    usuarioId={usuarioId} 
                 />
             )}
         </div>
