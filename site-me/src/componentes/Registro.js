@@ -20,7 +20,6 @@ function UserForm({ setUserName }) {
 
     useEffect(() => {
         const storedUserName = localStorage.getItem('userName');
-        const storedUsuarioId = localStorage.getItem('usuarioId'); 
         if (storedUserName) {
             setUserName(storedUserName);
             navigate('/'); 
@@ -154,3 +153,4 @@ function UserForm({ setUserName }) {
 }
 
 export default UserForm;
+

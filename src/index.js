@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const consultaRoutes = require('./routes/consultaRoutes');
 const rotasUsuarios = require('./routes/rotasUsuarios');
+const questionarioRoutes = require('./routes/questionarioRoutes');
 const connectToDatabase = require('./config/db');
 
 const app = express();
