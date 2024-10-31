@@ -1,13 +1,13 @@
-const jwt = require('jsonwebtoken');
+import { verify } from 'jsonwebtoken';
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
     const token = req.headers['authorization'];
 
     if (!token) {
         return res.status(401).json({ message: 'Token não fornecido.' });
     }
 
-    jwt.verify(token, 'seu_segredo_jwt', (err, decoded) => {
+    verify(token, 'Brenda-Gomes_Projeto_Me_Days0605119', (err, decoded) => {
         if (err) {
             return res.status(401).json({ message: 'Token inválido.' });
         }

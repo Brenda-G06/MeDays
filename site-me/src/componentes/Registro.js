@@ -32,15 +32,15 @@ function UserForm({ setUserName }) {
             nome, email, data_nascimento: dataNascimento, localizacao, senha, telefone,
         })
         .then(response => {
+            const { token } = response.data;
             setMessage('Usuário criado com sucesso!');
+            setMessage(token);
             setUserName(nome);
-            localStorage.setItem('userName', nome); 
+            localStorage.setItem('userName', nome);
+            localStorage.setItem('token', token);
 
             
-            if (response.data.usuarioId) {
-                localStorage.setItem('usuarioId', response.data.usuarioId); 
-            }
-
+          
           
             setNome(''); 
             setEmail(''); 
@@ -66,7 +66,6 @@ function UserForm({ setUserName }) {
             const { nome } = response.data;
             setUserName(nome);
             localStorage.setItem('userName', nome); 
-            localStorage.setItem('usuarioId', response.data.usuarioId); 
             navigate('/'); 
         })
         .catch(error => {

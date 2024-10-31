@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const connectToDatabase = require('../config/db'); 
-
+const jwt = require('jsonwebtoken');
 
 exports.createUser = async (req, res) => {
     const { nome, email, data_nascimento, senha, telefone, localizacao } = req.body;
@@ -17,13 +17,21 @@ exports.createUser = async (req, res) => {
         const query = 'INSERT INTO usuario (nome, email, data_nascimento, senha, telefone, localizacao) VALUES (?, ?, ?, ?, ?, ?)';
         const [result] = await connection.execute(query, [nome, email, data_nascimento, hashedPassword, telefone || null, localizacao || null]);
 
+        const token = jwt.sign(
+            { id: result.insertId, nome, email }, 
+            'Brenda-Gomes_Projeto_Me_Days0605119', 
+            { expiresIn: '1h' }
+           
+        );
+        console.log(token);
         res.status(201).json({ 
             id: result.insertId, 
             nome, 
             email, 
             data_nascimento, 
             telefone, 
-            localizacao 
+            localizacao,
+            token
         });
     } catch (error) {
         console.error('Erro ao processar a criação do usuário:', error);

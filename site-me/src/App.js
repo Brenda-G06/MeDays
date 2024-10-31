@@ -35,9 +35,7 @@ function App() {
                                 <li className="nav-item ms-3">
                                     <Link className="nav-link navTittle" to="/profissionais">Profissionais próximos</Link>
                                 </li>
-                                <li className="nav-item ms-3">
-                                    <Link className="nav-link navTittle" to="/configuracoes">Configurações</Link>
-                                </li>
+                        
                                 <li className="nav-item ms-3">
                                     <Link className="nav-link navTittle" to="/consultas">Consultas</Link>
                                 </li>
