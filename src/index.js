@@ -4,6 +4,7 @@ const consultaRoutes = require('./routes/consultaRoutes');
 const rotasUsuarios = require('./routes/rotasUsuarios');
 const questionarioRoutes = require('./routes/questionarioRoutes');
 const connectToDatabase = require('./config/db');
+const profissionalRouter = require('./profissionalRouter');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 app.use('/api', consultaRoutes);
 app.use('/usuarios', rotasUsuarios);
 app.use('/questionario', questionarioRoutes);
+router.use('/api', profissionalRouter);
 
 
 
