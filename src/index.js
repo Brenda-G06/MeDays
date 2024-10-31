@@ -14,7 +14,7 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use('/api', consultaRoutes);
 app.use('/usuarios', rotasUsuarios);
-app.use('/api/questionario', questionarioRoutes);
+app.use('/questionario', questionarioRoutes);
 
 
 

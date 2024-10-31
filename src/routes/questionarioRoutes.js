@@ -3,15 +3,10 @@ const router = express.Router();
 const questionarioController = require('../controllers/controllerQuestionario');
 
 
-router.post('/respostas', questionarioController.salvarRespostas);
+router.post('/respostas', questionarioController.salvarResposta);
 
 
 router.get('/perguntas', questionarioController.listarPerguntas);
 
-
-router.post('/perguntas', questionarioController.criarPergunta);
-
-
-router.put('/perguntas/:id', questionarioController.editarPergunta);
 
 module.exports = router;

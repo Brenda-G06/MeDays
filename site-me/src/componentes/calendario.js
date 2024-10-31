@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import Calendar from 'react-calendar';
 import './StyleInterno.css';
 import { ptBR } from 'date-fns/locale'; 
@@ -7,16 +7,9 @@ import ConsultaModal from './ConsultaModal';
 const CalendarioPage = () => {
     const [date, setDate] = useState(new Date());
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [usuarioId, setUsuarioId] = useState(null); 
+
 
    
-    useEffect(() => {
-        const storedUsuarioId = localStorage.getItem('usuarioId'); 
-        if (storedUsuarioId) {
-            setUsuarioId(storedUsuarioId);
-        }
-    }, []);
-
     const handleDateChange = (newDate) => setDate(newDate);
 
     const handleSaveConsulta = async (formData) => {
