@@ -201,3 +201,28 @@ text-align: right;
 }
 
 
+.imgOnline {
+  margin-top: -10px;
+  z-index: 2;
+  width: 100%; /* Tamanho padrão em telas pequenas */
+}
+
+.imgBackground {
+  width: 95%; /* Tamanho padrão em telas pequenas */
+  position: relative;
+  top: -180px;
+  z-index: 1;
+  margin: 0 auto;
+}
+
+/* Media query para telas maiores (desktop) */
+@media (min-width: 992px) {
+  .imgOnline {
+    width: 80%; /* Reduz o tamanho da imagem em telas grandes */
+  }
+
+  .imgBackground {
+    width: 85%; /* Reduz o tamanho da imagem de fundo em telas grandes */
+    top: -150px; /* Ajusta a posição vertical se necessário */
+  }
+}

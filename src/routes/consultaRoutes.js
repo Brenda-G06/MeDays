@@ -1,4 +1,4 @@
-// src/routes/consultaRoutes.js
+
 const express = require('express');
 const { adicionarConsulta } = require('../controllers/controllerConsulta');
 

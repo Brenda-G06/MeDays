@@ -4,7 +4,7 @@ import './StyleInterno.css';
 import { ptBR } from 'date-fns/locale'; 
 import ConsultaModal from './ConsultaModal';
 
-const CalendarioPage = () => {
+const CalendarioPage = ({usuarioId}) => {
     const [date, setDate] = useState(new Date());
     const [isModalOpen, setIsModalOpen] = useState(false);
 
