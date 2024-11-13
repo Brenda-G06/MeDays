@@ -1,3 +1,4 @@
+/* Estilos gerais */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,95 +13,165 @@ code {
     monospace;
 }
 
-.sub{
+p, h1, h2, h3, h4, h5, h6 {
+  cursor: default;
+}
+
+/* Títulos */
+.h1Tittle {
+  font-size: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.075);
+  font-family: 'Mulish', sans-serif;
+  font-weight: 100;
+  margin-top: 5%;
+}
+
+.sub {
   font-weight: bold;
-  font-size: 3rem; 
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.301); 
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   font-family: 'Mulish', sans-serif;
   font-weight: 1000;
 }
 
-.h1Tittle{
-  
-  font-size:0.5rem; 
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.075); 
-  font-family: 'Mulish', sans-serif;
-  font-weight: 100;
-  margin-top: 10%;
-}
-
-.navTittle{
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.11); 
+.navTittle {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.11);
   font-family: "Judson", serif;
   font-weight: 400;
   font-style: normal;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
-  cursor: default;
+/* Imagens */
+.imgDoc {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  margin: 5% auto; /* Centraliza a imagem */
+  display: block;
 }
 
-.imgDoc{
-  width: 100%; 
-  height: auto; 
-  max-width: 500px; 
-  margin-left: 90px;
-  margin-top: 16%;
-}
-
+/* Botão de login no navbar */
 .nav-link-login {
   display: inline-block;
   padding: 0.375rem 0.75rem;
-  margin: 0;
   font-size: 1rem;
   font-weight: 400;
   text-align: center;
-  white-space: nowrap;
-  background-color: #448b61; 
-  color: #fff; 
+  background-color: #448b61;
+  color: #fff;
   border: 1px solid transparent;
   border-radius: 0.25rem;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .nav-link-login:hover {
-  background-color: #177b4c; 
-  text-decoration: none; 
-  color:#fff;
+  background-color: #177b4c;
+  text-decoration: none;
+  color: #fff;
 }
 
+/* Caixa de login */
 .login-box {
-  background-color: #ffffff; 
-  padding: 20px; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  max-width: 500px; 
-  margin: auto; 
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: auto;
 }
 
 .login-box label {
-  display: block; 
+  display: block;
   margin-bottom: 10px;
 }
 
 .login-box input {
   width: 100%;
   padding: 8px;
-  margin-bottom: 15px; 
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .login-box button {
-  background-color: #28a745; 
-  color: #ffffff; 
-  border: none; 
-  padding: 10px 20px; 
-  border-radius: 4px; 
-  cursor: pointer; 
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .login-box button:hover {
-  background-color: #218838; 
+  background-color: #218838;
 }
 
+/* Media Queries para Responsividade */
+@media (max-width: 992px) {
+  .h1Tittle {
+    font-size: 1.8rem;
+    margin-top: 10%;
+  }
+  
+  .sub {
+    font-size: 2rem;
+  }
+
+  .imgDoc {
+    max-width: 350px;
+    margin-top: 8%;
+  }
+}
+
+@media (max-width: 768px) {
+  .h1Tittle {
+    font-size: 1.6rem;
+    text-align: center;
+    margin-top: 15%;
+  }
+  
+  .sub {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  
+  .imgDoc {
+    max-width: 300px;
+    margin-top: 10%;
+  }
+
+  .login-box {
+    padding: 15px;
+    max-width: 90%;
+  }
+  
+  .nav-link-login {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .h1Tittle {
+    font-size: 1.4rem;
+    margin-top: 20%;
+  }
+
+  .sub {
+    font-size: 1.6rem;
+  }
+
+  .imgDoc {
+    max-width: 250px;
+    margin-top: 15%;
+  }
+  
+  .nav-link-login {
+    font-size: 0.8rem;
+  }
+  
+  .login-box {
+    padding: 10px;
+    max-width: 100%;
+  }
+}

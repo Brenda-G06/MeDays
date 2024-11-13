@@ -85,10 +85,37 @@ exports.loginUser = async (req, res) => {
             return res.status(401).json({ error: 'Senha incorreta.' });
         }
 
-       
-        res.status(200).json({ nome: user.nome, email: user.email });
+    
+        const token = jwt.sign(
+            { id: user.id, nome: user.nome, email: user.email },
+            'Brenda-Gomes_Projeto_Me_Days0605119',
+            { expiresIn: '1h' }
+        );
+
+        res.status(200).json({ nome: user.nome, email: user.email, token });
     } catch (error) {
         console.error('Erro ao fazer login:', error);
         res.status(500).json({ error: 'Erro ao fazer login.' });
+    }
+};
+
+
+exports.getUserProfile = async (req, res) => {
+    const userId = req.userId; 
+
+    try {
+        const connection = await connectToDatabase();
+
+        const query = 'SELECT id, nome, email, data_nascimento, telefone, localizacao FROM usuario WHERE id = ?';
+        const [rows] = await connection.execute(query, [userId]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Usuário não encontrado.' });
+        }
+
+        res.status(200).json(rows[0]);
+    } catch (error) {
+        console.error('Erro ao buscar o perfil do usuário:', error);
+        res.status(500).json({ error: 'Erro ao buscar o perfil do usuário.' });
     }
 };

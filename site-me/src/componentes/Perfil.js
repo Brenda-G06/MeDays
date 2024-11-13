@@ -10,22 +10,26 @@ function PerfilPage() {
         telefone: ''
     });
 
+    
     useEffect(() => {
-        
-        const storedUsuarioId = localStorage.getItem('usuarioId'); 
-        if (storedUsuarioId) {
+        const storedUsuarioId = localStorage.getItem('usuarioId');
+        const token = localStorage.getItem('token');
+    
 
-            axios.get(`http://localhost:3001/usuarios/${storedUsuarioId}`) 
+        if (storedUsuarioId && token) {
+            axios.get('http://localhost:3001/usuarios/profile', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             .then(response => {
                 setUser(response.data);
             })
             .catch(error => {
-
                 console.error('Erro ao buscar o perfil do usuário:', error.response);
-                console.error('Detalhes do erro:', error.message);
             });
         } else {
-            console.error('Usuário não está logado ou ID não encontrado no localStorage.');
+            console.error('Usuário não está logado ou ID/token não encontrado no localStorage.');
         }
     }, []);
 

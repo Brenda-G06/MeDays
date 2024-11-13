@@ -32,24 +32,25 @@ function UserForm({ setUserName }) {
             nome, email, data_nascimento: dataNascimento, localizacao, senha, telefone,
         })
         .then(response => {
-            const { token } = response.data;
+            const { token, id } = response.data;
             setMessage('Usuário criado com sucesso!');
-            setMessage(token);
-            setUserName(nome);
-            localStorage.setItem('userName', nome);
-            localStorage.setItem('token', token);
-
             
-          
-          
+            setUserName(nome);
+            
+            // Armazenar o ID e o token no localStorage
+            localStorage.setItem('userName', nome);
+            localStorage.setItem('authToken', token); // Altere 'token' para 'authToken'
+            localStorage.setItem('usuarioId', id);
+    
+            // Limpar campos de entrada
             setNome(''); 
             setEmail(''); 
             setDataNascimento(''); 
             setLocalizacao(''); 
             setSenha(''); 
             setTelefone('');
-
-            navigate('/'); 
+    
+            navigate('/'); // Redirecionar para a página inicial ou perfil
         })
         .catch(error => {
             setError('Erro ao criar usuário.');
@@ -57,16 +58,22 @@ function UserForm({ setUserName }) {
         });
     };
 
+    
     const handleLogin = (e) => {
         e.preventDefault();
         axios.post('http://localhost:3001/api/usuarios/login', {
             emailOrPhone: loginEmailOrPhone, senha: loginSenha,
         })
         .then(response => {
-            const { nome } = response.data;
+            const { nome, token, id } = response.data; // Adicione 'token' e 'id'
             setUserName(nome);
-            localStorage.setItem('userName', nome); 
-            navigate('/'); 
+    
+            // Armazenar o ID e o token no localStorage
+            localStorage.setItem('userName', nome);
+            localStorage.setItem('authToken', token); // Armazena o token de autenticação
+            localStorage.setItem('usuarioId', id);
+    
+            navigate('/'); // Redirecionar para a página inicial ou perfil
         })
         .catch(error => {
             if (error.response && error.response.status === 401) {

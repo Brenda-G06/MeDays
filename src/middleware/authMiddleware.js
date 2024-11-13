@@ -1,18 +1,17 @@
-import { verify } from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
-export default (req, res, next) => {
-    const token = req.headers['authorization'];
+exports.authMiddleware = (req, res, next) => {
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
 
     if (!token) {
-        return res.status(401).json({ message: 'Token não fornecido.' });
+        return res.status(401).json({ error: 'Token de autenticação necessário.' });
     }
-
-    verify(token, 'Brenda-Gomes_Projeto_Me_Days0605119', (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: 'Token inválido.' });
-        }
-
+ 
+    try {
+        const decoded = jwt.verify(token, 'Brenda-Gomes_Projeto_Me_Days0605119');
         req.userId = decoded.id;
         next();
-    });
+    } catch (error) {
+        res.status(403).json({ error: 'Token inválido ou expirado.' });
+    }
 };
