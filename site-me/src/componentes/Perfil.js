@@ -10,11 +10,11 @@ function PerfilPage() {
         telefone: ''
     });
 
-    
     useEffect(() => {
         const storedUsuarioId = localStorage.getItem('usuarioId');
-        const token = localStorage.getItem('token');
-    
+        const token = localStorage.getItem('authToken');
+
+        console.log('Verificando localStorage:', { storedUsuarioId, token }); 
 
         if (storedUsuarioId && token) {
             axios.get('http://localhost:3001/usuarios/profile', {
@@ -23,10 +23,11 @@ function PerfilPage() {
                 }
             })
             .then(response => {
+                console.log('Dados do usuário carregados:', response.data); 
                 setUser(response.data);
             })
             .catch(error => {
-                console.error('Erro ao buscar o perfil do usuário:', error.response);
+                console.error('Erro ao buscar o perfil do usuário:', error.response || error.message);
             });
         } else {
             console.error('Usuário não está logado ou ID/token não encontrado no localStorage.');

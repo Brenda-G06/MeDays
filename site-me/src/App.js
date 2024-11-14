@@ -11,6 +11,7 @@ import logo from './logo/logo.png';
 import QuestionarioPage from './componentes/Cadastro';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import ConsultaPage from './componentes/Consultas';
 
 function App() {
     return (
@@ -91,6 +92,7 @@ function AppContent() {
                     <Route path="/cadastro" element={<CadastroPage setUserName={setUserName} />} /> 
                     <Route path="/perfil" element={<PerfilPage userName={userName} />} />
                     <Route path="/questionario" element={<QuestionarioPage />} />
+                    <Route path="/consultas" element={<ConsultaPage />} />
                 </Routes>
             </main>
         </div>

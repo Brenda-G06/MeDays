@@ -37,12 +37,12 @@ function UserForm({ setUserName }) {
             
             setUserName(nome);
             
-            // Armazenar o ID e o token no localStorage
+          
             localStorage.setItem('userName', nome);
-            localStorage.setItem('authToken', token); // Altere 'token' para 'authToken'
+            localStorage.setItem('authToken', token); 
             localStorage.setItem('usuarioId', id);
     
-            // Limpar campos de entrada
+      
             setNome(''); 
             setEmail(''); 
             setDataNascimento(''); 
@@ -50,7 +50,7 @@ function UserForm({ setUserName }) {
             setSenha(''); 
             setTelefone('');
     
-            navigate('/'); // Redirecionar para a página inicial ou perfil
+            navigate('/');
         })
         .catch(error => {
             setError('Erro ao criar usuário.');
@@ -65,15 +65,15 @@ function UserForm({ setUserName }) {
             emailOrPhone: loginEmailOrPhone, senha: loginSenha,
         })
         .then(response => {
-            const { nome, token, id } = response.data; // Adicione 'token' e 'id'
+            const { nome, token, id } = response.data; 
             setUserName(nome);
     
-            // Armazenar o ID e o token no localStorage
+
             localStorage.setItem('userName', nome);
-            localStorage.setItem('authToken', token); // Armazena o token de autenticação
+            localStorage.setItem('authToken', token); 
             localStorage.setItem('usuarioId', id);
     
-            navigate('/'); // Redirecionar para a página inicial ou perfil
+            navigate('/'); 
         })
         .catch(error => {
             if (error.response && error.response.status === 401) {

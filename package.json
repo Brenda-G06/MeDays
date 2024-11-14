@@ -25,6 +25,8 @@
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.10.2",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.16",
     "react-calendar": "^5.0.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.2",
