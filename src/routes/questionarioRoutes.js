@@ -8,5 +8,6 @@ router.post('/respostas', questionarioController.salvarResposta);
 
 router.get('/perguntas', questionarioController.listarPerguntas);
 
+router.get('/consultas', questionarioController.Consultas);
 
 module.exports = router;

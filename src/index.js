@@ -20,6 +20,7 @@ app.use('/profissionais', profissionalRouter);
 
 
 
+
 connectToDatabase()
     .then(() => {
         console.log('Banco de dados conectado com sucesso.');
