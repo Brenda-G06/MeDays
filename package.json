@@ -33,6 +33,7 @@
     "web-vitals": "^4.2.3"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^8.2.2",
     "nodemon": "^2.0.12"
   },

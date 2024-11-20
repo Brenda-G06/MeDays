@@ -5,7 +5,6 @@ const questionarioController = require('../controllers/controllerQuestionario');
 
 router.post('/respostas', questionarioController.salvarResposta);
 
-
 router.get('/perguntas', questionarioController.listarPerguntas);
 
 router.get('/consultas', questionarioController.Consultas);

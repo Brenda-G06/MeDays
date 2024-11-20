@@ -4,33 +4,33 @@ import axios from 'axios';
 import './StyleInterno.css';
 
 const ConsultaPage = () => {
-    const [recomendacoes, setRecomendacoes] = useState([]);
+    const [cronograma, setCronograma] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchRecomendacoes = async () => {
+        const fetchCronograma = async () => {
             try {
                 const token = localStorage.getItem('authToken');
-                const response = await axios.get('http://localhost:3001/api/consultas/recomendacoes', {
+                const response = await axios.get('http://localhost:3001/usuario/cronograma', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setRecomendacoes(response.data);
+                setCronograma(response.data.cronograma || []);
             } catch (error) {
-                console.error('Erro ao buscar recomendações:', error);
+                console.error('Erro ao buscar cronograma:', error);
             }
         };
-        
-        fetchRecomendacoes();
+
+        fetchCronograma();
     }, []);
 
     return (
         <div className="report-container">
             <h2>Cronograma Aconselhável</h2>
             <div className="recommendations">
-                {recomendacoes.length > 0 ? (
-                    recomendacoes.map((rec, index) => (
+                {cronograma.length > 0 ? (
+                    cronograma.map((item, index) => (
                         <div key={index} className="recommendation-item">
-                            <p><strong>{rec.tipo}</strong> - Frequência de {rec.frequencia}</p>
+                            <p><strong>{item.profissional}</strong> - Frequência de {item.frequencia}</p>
                             <button className="find-professional-button">Buscar profissional</button>
                         </div>
                     ))

@@ -1,68 +1,103 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
-import './StyleInterno.css';
+import { useNavigate } from 'react-router-dom';
+import './StyleInterno.css';  
+
 
 const Questionario = () => {
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true); 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            setIsAuthenticated(true);
-            loadQuestions();
-        } else {
-            setIsAuthenticated(false);
+    const loadQuestions = useCallback(async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/questionario/perguntas');
+            setQuestions(response.data);
+            setLoading(false); 
+        } catch (error) {
+            console.error('Erro ao carregar perguntas:', error.response || error.message);
+            if (error.response && error.response.status === 401) {
+                navigate('/login');
+            }
         }
-    }, []);
+    }, [navigate]);
 
-    const loadQuestions = () => {
-        axios.get(`http://localhost:3001/questionario/perguntas`)
-            .then(response => {
-                setQuestions(response.data);
-            })
-            .catch(error => {
-                console.error('Erro ao carregar perguntas:', error);
-            });
-    };
+    useEffect(() => {
+        loadQuestions();
+    }, [loadQuestions]);
 
     const handleOptionSelect = (option) => {
         setSelectedOption(option);
     };
 
-    const handleNextClick = () => {
-        if (selectedOption !== null) {
-   
+    const getNextQuestionIndex = (currentQuestion, selectedOption) => {
+        if (currentQuestion.id === 2) {
+            if (selectedOption === "Sim, pratico") {
+                return questions.findIndex(q => q.id === 3); 
+            }
+            return currentQuestionIndex + 1;
+        }
 
-         
-            if (currentQuestionIndex < questions.length - 1) {
-                setCurrentQuestionIndex(currentQuestionIndex + 1);
-                setSelectedOption(null);
-            } else {
-                
-                navigate('/consulta');
+        if (currentQuestion.condicional) {
+            const condicionalResposta = JSON.parse(currentQuestion.condicional);
+            if (condicionalResposta[selectedOption] !== undefined) {
+                return questions.findIndex(q => q.id === condicionalResposta[selectedOption]);
             }
         }
+
+        return currentQuestionIndex < questions.length - 1 ? currentQuestionIndex + 1 : null;
     };
 
-    const handleRedirectToSignup = () => {
-        navigate('/cadastro'); 
+    const handleNextClick = async () => {
+        if (selectedOption !== null) {
+            const currentQuestion = questions[currentQuestionIndex];
+
+            const id_usuario = localStorage.getItem('usuarioId');
+            
+            if (!id_usuario) {
+                navigate('/login');
+                return;
+            }
+
+            try {
+                await axios.post(
+                    'http://localhost:3001/questionario/respostas',
+                    {
+                        id_usuario: id_usuario, 
+                        id_pergunta: currentQuestion.id,
+                        resposta: selectedOption,
+                    }
+                );
+
+                const nextQuestionIndex = getNextQuestionIndex(currentQuestion, selectedOption);
+
+                if (nextQuestionIndex !== null && nextQuestionIndex < questions.length) {
+                    setCurrentQuestionIndex(nextQuestionIndex);
+                    setSelectedOption(null);
+                } else {
+                    navigate('/consulta'); 
+                }
+            } catch (error) {
+                console.error('Erro ao salvar resposta:', error);
+            }
+            
+        }
     };
 
     return (
         <div className="screen-container">
-            {isAuthenticated ? (
+            {loading ? (
+                <p>Carregando perguntas...</p>
+            ) : (
                 <div className="question-box">
-                    {questions.length > 0 && (
+
+                    {questions.length > 0 && questions[currentQuestionIndex] ? (
                         <>
                             <h2 className="question-text">{questions[currentQuestionIndex].pergunta}</h2>
                             <div className="options-container">
-                                {questions[currentQuestionIndex].opcoes.map((option, index) => (
+                                {questions[currentQuestionIndex].opcoes && questions[currentQuestionIndex].opcoes.map((option, index) => (
                                     <div
                                         key={index}
                                         className={`option-button ${selectedOption === option ? 'selected' : ''}`}
@@ -72,14 +107,14 @@ const Questionario = () => {
                                     </div>
                                 ))}
                             </div>
-                            <button className="next-button" onClick={handleNextClick}>Prosseguir</button>
                         </>
+                    ) : (
+                        <p>Carregando pergunta...</p>
                     )}
-                </div>
-            ) : (
-                <div className="not-logged-in">
-                    <h2>Você precisa estar logado para acessar o questionário.</h2>
-                    <button className="signup-button" onClick={handleRedirectToSignup}>Ir para Cadastro</button>
+
+                    <button className="next-button" onClick={handleNextClick}>
+                        Prosseguir
+                    </button>
                 </div>
             )}
         </div>

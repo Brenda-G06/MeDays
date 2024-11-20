@@ -99,6 +99,35 @@ exports.loginUser = async (req, res) => {
     }
 };
 
+exports.obterCronograma = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ error: 'Token de autenticação é obrigatório.' });
+    }
+
+    let id_usuario;
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        id_usuario = decoded.id_usuario;
+    } catch (error) {
+        return res.status(401).json({ error: 'Token inválido.' });
+    }
+
+    try {
+        const connection = await connectToDatabase();
+        const [rows] = await connection.query('SELECT cronograma FROM usuario WHERE id = ?', [id_usuario]);
+        connection.end();
+
+        if (rows.length === 0 || !rows[0].cronograma) {
+            return res.status(404).json({ error: 'Cronograma não encontrado.' });
+        }
+
+        res.status(200).json({ cronograma: JSON.parse(rows[0].cronograma) });
+    } catch (error) {
+        console.error('Erro ao buscar cronograma:', error);
+        res.status(500).json({ error: 'Erro ao buscar cronograma' });
+    }
+};
 
 exports.getUserProfile = async (req, res) => {
     const userId = req.userId; 
@@ -119,3 +148,5 @@ exports.getUserProfile = async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar o perfil do usuário.' });
     }
 };
+
+
