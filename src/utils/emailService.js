@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 
 function sendConfirmationEmail(userEmail, token) {
-    const confirmationLink = `http://localhost:3000/confirm-email?token=${token}`; 
+    const confirmationLink = `https://api-lilac-seven-61.vercel.app/confirm-email?token=${token}`; 
 
     const mailOptions = {
         from: 'seuemail@gmail.com',  

@@ -11,7 +11,7 @@ const app = express();
 
 
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'https://front-66iubc0aw-brenda-g06s-projects.vercel.app/' }));
 
 
 app.use('/api', consultaRoutes);

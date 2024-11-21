@@ -34,7 +34,7 @@ exports.createUser = async (req, res) => {
         );
 
    
-        const confirmationLink = `http://localhost:3000/confirm-email?token=${token}`;
+        const confirmationLink = `http://localhost:3000/confirm-email?token=${token}`; //aa
 
 
         const mailOptions = {
