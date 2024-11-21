@@ -6,6 +6,7 @@ const questionarioRoutes = require('./routes/questionarioRoutes');
 const connectToDatabase = require('./config/db');
 const profissionalRouter = require('./routes/profissionalRoutes');
 
+const sendConsultationAlerts = require('./routes/alertRoute')
 const app = express();
 
 
@@ -17,10 +18,24 @@ app.use('/api', consultaRoutes);
 app.use('/usuarios', rotasUsuarios);
 app.use('/questionario', questionarioRoutes);
 app.use('/profissionais', profissionalRouter);
+app.use('/alerta', sendConsultationAlerts);
 
+setInterval(async () => {
+    try {
+        const [consultas] = await connection.execute(`
+            SELECT c.data_consulta, u.id AS userId, u.email, u.nome
+            FROM consultas c
+            INNER JOIN usuario u ON c.userId = u.id
+            WHERE c.data_consulta >= NOW() AND c.data_consulta <= DATE_ADD(NOW(), INTERVAL 3 DAY)
+        `);
 
-
-
+        for (const consulta of consultas) {
+            await sendConsultationAlerts(consulta.userId, consulta.data_consulta, 3);
+        }
+    } catch (error) {
+        console.error('Erro ao enviar alertas:', error);
+    }
+}, 60 * 60 * 1000);
 connectToDatabase()
     .then(() => {
         console.log('Banco de dados conectado com sucesso.');

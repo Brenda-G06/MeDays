@@ -11,11 +11,11 @@ const CalendarioPage = ({ usuarioId: propUsuarioId }) => {
     const [consultas, setConsultas] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+  
     const loadConsultas = useCallback(async () => {
         if (usuarioId) {
             try {
                 const response = await axios.get(`http://localhost:3001/consultas?usuarioId=${usuarioId}`);
-
                 setConsultas(response.data);
             } catch (error) {
                 console.error('Erro ao carregar consultas:', error);
@@ -23,8 +23,8 @@ const CalendarioPage = ({ usuarioId: propUsuarioId }) => {
         }
     }, [usuarioId]);
 
+  
     useEffect(() => {
-       
         if (!usuarioId) {
             const storedUsuarioId = localStorage.getItem('usuarioId');
             if (storedUsuarioId) {
@@ -34,13 +34,16 @@ const CalendarioPage = ({ usuarioId: propUsuarioId }) => {
         loadConsultas();
     }, [usuarioId, loadConsultas]);
 
+
     const handleDateChange = (newDate) => setDate(newDate);
 
+    
     const handleSaveConsulta = async (formData) => {
         const consultaData = {
             usuario_id: usuarioId,
             data: formData.data,
             descricao: formData.descricao,
+            alertDays: formData.alertDays, 
         };
 
         try {
@@ -48,7 +51,7 @@ const CalendarioPage = ({ usuarioId: propUsuarioId }) => {
 
             if (response.status === 201) {
                 alert('Consulta adicionada com sucesso!');
-                setIsModalOpen(false);
+                setIsModalOpen(false); 
                 loadConsultas();
             }
         } catch (error) {
@@ -57,33 +60,43 @@ const CalendarioPage = ({ usuarioId: propUsuarioId }) => {
         }
     };
 
+
     const renderTileContent = ({ date, view }) => {
         if (view === 'month') {
             const consultaDoDia = consultas.find(
                 (consulta) => new Date(consulta.data).toDateString() === date.toDateString()
             );
-            return consultaDoDia ? <div className="consulta-marker">📅</div> : null;
+            return consultaDoDia ? (
+                <div className="consulta-marker">
+                    📅
+                </div>
+            ) : null;
         }
     };
 
     return (
-        <div className="container mt-5">
+        <div className="calendario-port mt-5">
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-sm-12">
+                    
                     <Calendar
                         onChange={handleDateChange}
                         value={date}
                         locale={ptBR}
-                        className="w-100"
+                        className="react-calendar w-100"
                         tileContent={renderTileContent}
                     />
-                    <button
-                        className="btn btn-primary mt-3"
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        Adicionar Consulta
-                    </button>
                 </div>
+            </div>
+
+      
+            <div className="add-button-container">
+                <button
+                    className="add-button"
+                    onClick={() => setIsModalOpen(true)}
+                >
+                    Adicionar Consultas
+                </button>
             </div>
 
             <ConsultaModal

@@ -61,7 +61,7 @@ function UserForm({ setUserName }) {
     
     const handleLogin = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/api/usuarios/login', {
+        axios.post('http://localhost:3001/usuarios/login', {
             emailOrPhone: loginEmailOrPhone, senha: loginSenha,
         })
         .then(response => {

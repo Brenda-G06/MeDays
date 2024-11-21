@@ -9,4 +9,5 @@ router.get('/perguntas', questionarioController.listarPerguntas);
 
 router.get('/consultas', questionarioController.Consultas);
 
+router.post('/recalcular-frequencias', questionarioController.recalcularFrequencias);
 module.exports = router;

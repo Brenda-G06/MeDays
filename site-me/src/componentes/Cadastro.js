@@ -1,25 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './StyleInterno.css';  
-
+import './StyleInterno.css';
 
 const Questionario = () => {
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const loadQuestions = useCallback(async () => {
         try {
             const response = await axios.get('http://localhost:3001/questionario/perguntas');
             setQuestions(response.data);
-            setLoading(false); 
+            setLoading(false);
         } catch (error) {
             console.error('Erro ao carregar perguntas:', error.response || error.message);
             if (error.response && error.response.status === 401) {
                 navigate('/login');
+            } else {
+                alert('Erro ao carregar o questionário. Tente novamente mais tarde.');
             }
         }
     }, [navigate]);
@@ -28,61 +29,52 @@ const Questionario = () => {
         loadQuestions();
     }, [loadQuestions]);
 
+
     const handleOptionSelect = (option) => {
         setSelectedOption(option);
     };
 
-    const getNextQuestionIndex = (currentQuestion, selectedOption) => {
-        if (currentQuestion.id === 2) {
-            if (selectedOption === "Sim, pratico") {
-                return questions.findIndex(q => q.id === 3); 
-            }
-            return currentQuestionIndex + 1;
-        }
-
-        if (currentQuestion.condicional) {
-            const condicionalResposta = JSON.parse(currentQuestion.condicional);
-            if (condicionalResposta[selectedOption] !== undefined) {
-                return questions.findIndex(q => q.id === condicionalResposta[selectedOption]);
-            }
-        }
-
-        return currentQuestionIndex < questions.length - 1 ? currentQuestionIndex + 1 : null;
-    };
 
     const handleNextClick = async () => {
         if (selectedOption !== null) {
             const currentQuestion = questions[currentQuestionIndex];
-
             const id_usuario = localStorage.getItem('usuarioId');
             
             if (!id_usuario) {
                 navigate('/login');
                 return;
             }
-
+    
             try {
-                await axios.post(
-                    'http://localhost:3001/questionario/respostas',
-                    {
-                        id_usuario: id_usuario, 
-                        id_pergunta: currentQuestion.id,
-                        resposta: selectedOption,
+                
+                const response = await axios.post('http://localhost:3001/questionario/respostas', {
+                    id_usuario,
+                    id_pergunta: currentQuestion.id,
+                    resposta: selectedOption,
+                });
+    
+                const { proximaPerguntaId, info } = response.data;
+
+                if (!proximaPerguntaId) {
+                    if (info === 'Fim do questionário.') {
+            
+                        navigate('/consultas'); 
                     }
-                );
+                    return;
+                }
 
-                const nextQuestionIndex = getNextQuestionIndex(currentQuestion, selectedOption);
 
-                if (nextQuestionIndex !== null && nextQuestionIndex < questions.length) {
-                    setCurrentQuestionIndex(nextQuestionIndex);
+                const nextIndex = questions.findIndex(q => q.id === proximaPerguntaId);
+                if (nextIndex !== -1) {
+                    setCurrentQuestionIndex(nextIndex);
                     setSelectedOption(null);
                 } else {
-                    navigate('/consulta'); 
+                    console.error('Próxima pergunta não encontrada.');
                 }
             } catch (error) {
                 console.error('Erro ao salvar resposta:', error);
+                console.log('Erro ao salvar resposta. Tente novamente mais tarde.');
             }
-            
         }
     };
 
@@ -92,7 +84,6 @@ const Questionario = () => {
                 <p>Carregando perguntas...</p>
             ) : (
                 <div className="question-box">
-
                     {questions.length > 0 && questions[currentQuestionIndex] ? (
                         <>
                             <h2 className="question-text">{questions[currentQuestionIndex].pergunta}</h2>
@@ -112,7 +103,11 @@ const Questionario = () => {
                         <p>Carregando pergunta...</p>
                     )}
 
-                    <button className="next-button" onClick={handleNextClick}>
+                    <button
+                        className="next-button"
+                        onClick={handleNextClick}
+                        disabled={!selectedOption}
+                    >
                         Prosseguir
                     </button>
                 </div>

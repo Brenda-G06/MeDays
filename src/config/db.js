@@ -8,7 +8,8 @@ const connectToDatabase = async () => {
             host: 'mysql.infocimol.com.br',  
             user: 'infocimol19',  
             password: 'Brenda0605119',  
-            database: 'infocimol19'  
+            database: 'infocimol19',
+            connectTimeout: 10000,
         });
         return connection;
     } catch (error) {

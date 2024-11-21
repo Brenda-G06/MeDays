@@ -4,9 +4,9 @@ const ConsultaModal = ({ isOpen, onClose, onSave, selectedDate, usuarioId }) => 
     const [formData, setFormData] = useState({
         usuario_id: usuarioId || '', 
         data: selectedDate || '',
-        descricao: ''
+        descricao: '',
+        alertDays: 3, 
     });
-
 
     useEffect(() => {
         setFormData(prevData => ({ ...prevData, usuario_id: usuarioId }));
@@ -43,6 +43,14 @@ const ConsultaModal = ({ isOpen, onClose, onSave, selectedDate, usuarioId }) => 
                         placeholder="Descrição da consulta"
                         value={formData.descricao}
                         onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="alertDays"
+                        value={formData.alertDays}
+                        onChange={handleChange}
+                        placeholder="Dias antes do alerta"
                         required
                     />
                     <button type="submit">Salvar</button>

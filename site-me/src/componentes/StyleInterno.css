@@ -8,22 +8,94 @@ body {
 }
 .calendario-port {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   padding: 20px;
-  border: 1px solid #cce6bd;
-  border-radius: 2px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.493);
+  border: 1px solid #478C63;
+  border-radius: 8px;
+  background-color: #337544;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Mulish', sans-serif;
+}
+.react-calendar {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  font-family: 'Mulish', sans-serif;
+  color: white;
 }
 
+
+.react-calendar__navigation {
+  margin-bottom: 10px;
+}
+
+.react-calendar__navigation button {
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+}
+
+.react-calendar__navigation button:disabled {
+  color: #ccc;
+}
+
+
+.react-calendar__month-view__weekdays {
+  background-color: #478C63;
+  text-align: center;
+  padding: 8px 0;
+  font-weight: bold;
+  border-radius: 6px 6px 0 0;
+}
+
+
+.react-calendar__tile {
+  background: #337544;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  border: 1px solid #478C63;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.react-calendar__tile--now {
+  background-color: #478C63;
+  border: 2px solid #6FAE75;
+  color: white;
+  font-weight: bold;
+}
+
+.react-calendar__tile:hover {
+  background-color: #6FAE75;
+  color: white;
+}
+
+.react-calendar__tile--active {
+  background-color: #6FAE75;
+  color: white;
+}
+
+.consulta-marker {
+  background-color: #fff;
+  color: #337544;
+  font-size: 0.8rem;
+  padding: 5px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-top: 5px;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.7); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,14 +103,22 @@ body {
 }
 
 .modal-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 100%;
+  background-color: #337544; 
+  color: white; 
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   max-width: 500px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  font-family: 'Mulish', sans-serif;
+  text-align: center;
 }
-
+.modal-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
 .close-button {
   position: absolute;
   top: 10px;
@@ -49,9 +129,70 @@ body {
   cursor: pointer;
 }
 
+.modal-content input[type="date"],
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #6FAE75;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: 'Mulish', sans-serif;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.modal-content textarea {
+  resize: none; 
+  height: 100px;
+}
+
+
+.modal-content button {
+  background-color: #478C63; 
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Mulish', sans-serif;
+}
+
+.modal-content button:hover {
+  background-color: #6FAE75;
+}
+
+
+.modal-content button[type="button"] {
+  background-color: #B22222; 
+}
+
+.modal-content button[type="button"]:hover {
+  background-color: #FF6347; 
+}
+
+
+
 @media (max-width: 768px) {
   .calendario-port {
       padding: 10px;
+  }
+  .modal-content {
+    padding: 15px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .modal-content button {
+    font-size: 1rem;
+    padding: 8px 15px;
   }
 }
 
@@ -366,4 +507,24 @@ text-align: right;
 
 .combat-fake-news a:hover {
   text-decoration: underline;
+}
+.add-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Espaçamento entre o calendário e o botão */
+}
+
+.add-button {
+  background-color: #478C63;
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Mulish', sans-serif;
+}
+.add-button:hover {
+  background-color: #6FAE75;
 }
